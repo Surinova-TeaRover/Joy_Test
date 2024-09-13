@@ -1,0 +1,26 @@
+--cpu Cortex-M3
+"joy_test\startup_stm32f103xb.o"
+"joy_test\main.o"
+"joy_test\stm32f1xx_it.o"
+"joy_test\stm32f1xx_hal_msp.o"
+"joy_test\stm32f1xx_hal_gpio_ex.o"
+"joy_test\stm32f1xx_hal_adc.o"
+"joy_test\stm32f1xx_hal_adc_ex.o"
+"joy_test\stm32f1xx_hal.o"
+"joy_test\stm32f1xx_hal_rcc.o"
+"joy_test\stm32f1xx_hal_rcc_ex.o"
+"joy_test\stm32f1xx_hal_gpio.o"
+"joy_test\stm32f1xx_hal_dma.o"
+"joy_test\stm32f1xx_hal_cortex.o"
+"joy_test\stm32f1xx_hal_pwr.o"
+"joy_test\stm32f1xx_hal_flash.o"
+"joy_test\stm32f1xx_hal_flash_ex.o"
+"joy_test\stm32f1xx_hal_exti.o"
+"joy_test\stm32f1xx_hal_tim.o"
+"joy_test\stm32f1xx_hal_tim_ex.o"
+"joy_test\stm32f1xx_hal_uart.o"
+"joy_test\system_stm32f1xx.o"
+--strict --scatter "Joy_Test\Joy_Test.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "Joy_Test.map" -o Joy_Test\Joy_Test.axf
