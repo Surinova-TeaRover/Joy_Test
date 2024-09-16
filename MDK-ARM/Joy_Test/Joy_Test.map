@@ -1298,18 +1298,18 @@ Image Symbol Table
     i.UART_Start_Receive_IT                  0x080024c8   Section        0  stm32f1xx_hal_uart.o(i.UART_Start_Receive_IT)
     i.USART1_IRQHandler                      0x08002500   Section        0  stm32f1xx_it.o(i.USART1_IRQHandler)
     i.Uart_State                             0x0800250c   Section        0  main.o(i.Uart_State)
-    i.UsageFault_Handler                     0x08002558   Section        0  stm32f1xx_it.o(i.UsageFault_Handler)
-    i.__NVIC_SetPriority                     0x0800255a   Section        0  stm32f1xx_hal_cortex.o(i.__NVIC_SetPriority)
-    __NVIC_SetPriority                       0x0800255b   Thumb Code    32  stm32f1xx_hal_cortex.o(i.__NVIC_SetPriority)
-    i.main                                   0x0800257c   Section        0  main.o(i.main)
-    .constdata                               0x08002664   Section       18  stm32f1xx_hal_rcc.o(.constdata)
-    aPredivFactorTable                       0x08002664   Data           2  stm32f1xx_hal_rcc.o(.constdata)
-    aPLLMULFactorTable                       0x08002666   Data          16  stm32f1xx_hal_rcc.o(.constdata)
-    .constdata                               0x08002676   Section       18  stm32f1xx_hal_rcc_ex.o(.constdata)
-    aPredivFactorTable                       0x08002676   Data           2  stm32f1xx_hal_rcc_ex.o(.constdata)
-    aPLLMULFactorTable                       0x08002678   Data          16  stm32f1xx_hal_rcc_ex.o(.constdata)
-    .constdata                               0x08002688   Section       16  system_stm32f1xx.o(.constdata)
-    .constdata                               0x08002698   Section        8  system_stm32f1xx.o(.constdata)
+    i.UsageFault_Handler                     0x0800256c   Section        0  stm32f1xx_it.o(i.UsageFault_Handler)
+    i.__NVIC_SetPriority                     0x0800256e   Section        0  stm32f1xx_hal_cortex.o(i.__NVIC_SetPriority)
+    __NVIC_SetPriority                       0x0800256f   Thumb Code    32  stm32f1xx_hal_cortex.o(i.__NVIC_SetPriority)
+    i.main                                   0x08002590   Section        0  main.o(i.main)
+    .constdata                               0x08002678   Section       18  stm32f1xx_hal_rcc.o(.constdata)
+    aPredivFactorTable                       0x08002678   Data           2  stm32f1xx_hal_rcc.o(.constdata)
+    aPLLMULFactorTable                       0x0800267a   Data          16  stm32f1xx_hal_rcc.o(.constdata)
+    .constdata                               0x0800268a   Section       18  stm32f1xx_hal_rcc_ex.o(.constdata)
+    aPredivFactorTable                       0x0800268a   Data           2  stm32f1xx_hal_rcc_ex.o(.constdata)
+    aPLLMULFactorTable                       0x0800268c   Data          16  stm32f1xx_hal_rcc_ex.o(.constdata)
+    .constdata                               0x0800269c   Section       16  system_stm32f1xx.o(.constdata)
+    .constdata                               0x080026ac   Section        8  system_stm32f1xx.o(.constdata)
     .data                                    0x20000000   Section       64  main.o(.data)
     .data                                    0x20000040   Section        1  main.o(.data)
     .data                                    0x20000042   Section        4  stm32f1xx_it.o(.data)
@@ -1552,13 +1552,13 @@ Image Symbol Table
     Tx_Data                                  0x080022b1   Thumb Code    56  main.o(i.Tx_Data)
     UART_Start_Receive_IT                    0x080024c9   Thumb Code    54  stm32f1xx_hal_uart.o(i.UART_Start_Receive_IT)
     USART1_IRQHandler                        0x08002501   Thumb Code     6  stm32f1xx_it.o(i.USART1_IRQHandler)
-    Uart_State                               0x0800250d   Thumb Code    62  main.o(i.Uart_State)
-    UsageFault_Handler                       0x08002559   Thumb Code     2  stm32f1xx_it.o(i.UsageFault_Handler)
-    main                                     0x0800257d   Thumb Code   218  main.o(i.main)
-    AHBPrescTable                            0x08002688   Data          16  system_stm32f1xx.o(.constdata)
-    APBPrescTable                            0x08002698   Data           8  system_stm32f1xx.o(.constdata)
-    Region$$Table$$Base                      0x080026a0   Number         0  anon$$obj.o(Region$$Table)
-    Region$$Table$$Limit                     0x080026c0   Number         0  anon$$obj.o(Region$$Table)
+    Uart_State                               0x0800250d   Thumb Code    84  main.o(i.Uart_State)
+    UsageFault_Handler                       0x0800256d   Thumb Code     2  stm32f1xx_it.o(i.UsageFault_Handler)
+    main                                     0x08002591   Thumb Code   218  main.o(i.main)
+    AHBPrescTable                            0x0800269c   Data          16  system_stm32f1xx.o(.constdata)
+    APBPrescTable                            0x080026ac   Data           8  system_stm32f1xx.o(.constdata)
+    Region$$Table$$Base                      0x080026b4   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x080026d4   Number         0  anon$$obj.o(Region$$Table)
     Uart_State_Pin                           0x20000000   Data           1  main.o(.data)
     Mode                                     0x20000001   Data           1  main.o(.data)
     Semi                                     0x20000002   Data           1  main.o(.data)
@@ -1590,7 +1590,8 @@ Image Symbol Table
     Steering_Mode_Temp                       0x2000001c   Data           1  main.o(.data)
     count                                    0x2000001d   Data           1  main.o(.data)
     Uart_Connection                          0x2000001e   Data           1  main.o(.data)
-    Rx                                       0x2000001f   Data           2  main.o(.data)
+    Uart_Check                               0x2000001f   Data           1  main.o(.data)
+    Rx                                       0x20000020   Data           2  main.o(.data)
     Steering_Angle                           0x20000024   Data           4  main.o(.data)
     Steering_Val                             0x20000028   Data           4  main.o(.data)
     Steering_Angle_Temp                      0x2000002c   Data           4  main.o(.data)
@@ -1620,9 +1621,9 @@ Memory Map of the image
 
   Image Entry point : 0x080000ed
 
-  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x00002718, Max: 0x00010000, ABSOLUTE)
+  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x0000272c, Max: 0x00010000, ABSOLUTE)
 
-    Execution Region ER_IROM1 (Exec base: 0x08000000, Load base: 0x08000000, Size: 0x000026c0, Max: 0x00010000, ABSOLUTE)
+    Execution Region ER_IROM1 (Exec base: 0x08000000, Load base: 0x08000000, Size: 0x000026d4, Max: 0x00010000, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
@@ -1790,29 +1791,29 @@ Memory Map of the image
     0x080024c8   0x080024c8   0x00000036   Code   RO         2723    i.UART_Start_Receive_IT  stm32f1xx_hal_uart.o
     0x080024fe   0x080024fe   0x00000002   PAD
     0x08002500   0x08002500   0x0000000c   Code   RO          237    i.USART1_IRQHandler  stm32f1xx_it.o
-    0x0800250c   0x0800250c   0x0000004c   Code   RO           26    i.Uart_State        main.o
-    0x08002558   0x08002558   0x00000002   Code   RO          238    i.UsageFault_Handler  stm32f1xx_it.o
-    0x0800255a   0x0800255a   0x00000020   Code   RO         1205    i.__NVIC_SetPriority  stm32f1xx_hal_cortex.o
-    0x0800257a   0x0800257a   0x00000002   PAD
-    0x0800257c   0x0800257c   0x000000e8   Code   RO           27    i.main              main.o
-    0x08002664   0x08002664   0x00000012   Data   RO          903    .constdata          stm32f1xx_hal_rcc.o
-    0x08002676   0x08002676   0x00000012   Data   RO          995    .constdata          stm32f1xx_hal_rcc_ex.o
-    0x08002688   0x08002688   0x00000010   Data   RO         3030    .constdata          system_stm32f1xx.o
-    0x08002698   0x08002698   0x00000008   Data   RO         3031    .constdata          system_stm32f1xx.o
-    0x080026a0   0x080026a0   0x00000020   Data   RO         3228    Region$$Table       anon$$obj.o
+    0x0800250c   0x0800250c   0x00000060   Code   RO           26    i.Uart_State        main.o
+    0x0800256c   0x0800256c   0x00000002   Code   RO          238    i.UsageFault_Handler  stm32f1xx_it.o
+    0x0800256e   0x0800256e   0x00000020   Code   RO         1205    i.__NVIC_SetPriority  stm32f1xx_hal_cortex.o
+    0x0800258e   0x0800258e   0x00000002   PAD
+    0x08002590   0x08002590   0x000000e8   Code   RO           27    i.main              main.o
+    0x08002678   0x08002678   0x00000012   Data   RO          903    .constdata          stm32f1xx_hal_rcc.o
+    0x0800268a   0x0800268a   0x00000012   Data   RO          995    .constdata          stm32f1xx_hal_rcc_ex.o
+    0x0800269c   0x0800269c   0x00000010   Data   RO         3030    .constdata          system_stm32f1xx.o
+    0x080026ac   0x080026ac   0x00000008   Data   RO         3031    .constdata          system_stm32f1xx.o
+    0x080026b4   0x080026b4   0x00000020   Data   RO         3228    Region$$Table       anon$$obj.o
 
 
-    Execution Region RW_IRAM1 (Exec base: 0x20000000, Load base: 0x080026c0, Size: 0x00000800, Max: 0x00005000, ABSOLUTE)
+    Execution Region RW_IRAM1 (Exec base: 0x20000000, Load base: 0x080026d4, Size: 0x00000800, Max: 0x00005000, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
-    0x20000000   0x080026c0   0x00000040   Data   RW           32    .data               main.o
-    0x20000040   0x08002700   0x00000001   Data   RW           37    .data               main.o
-    0x20000041   0x08002701   0x00000001   PAD
-    0x20000042   0x08002702   0x00000004   Data   RW          239    .data               stm32f1xx_it.o
-    0x20000046   0x08002706   0x00000002   PAD
-    0x20000048   0x08002708   0x0000000c   Data   RW          740    .data               stm32f1xx_hal.o
-    0x20000054   0x08002714   0x00000004   Data   RW         3032    .data               system_stm32f1xx.o
+    0x20000000   0x080026d4   0x00000040   Data   RW           32    .data               main.o
+    0x20000040   0x08002714   0x00000001   Data   RW           37    .data               main.o
+    0x20000041   0x08002715   0x00000001   PAD
+    0x20000042   0x08002716   0x00000004   Data   RW          239    .data               stm32f1xx_it.o
+    0x20000046   0x0800271a   0x00000002   PAD
+    0x20000048   0x0800271c   0x0000000c   Data   RW          740    .data               stm32f1xx_hal.o
+    0x20000054   0x08002728   0x00000004   Data   RW         3032    .data               system_stm32f1xx.o
     0x20000058        -       0x000000c0   Zero   RW           28    .bss                main.o
     0x20000118        -       0x00000044   Zero   RW           29    .bss                main.o
     0x2000015c        -       0x00000044   Zero   RW           30    .bss                main.o
@@ -1828,7 +1829,7 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Object Name
 
-      1552        142          0         65        328     456856   main.o
+      1572        140          0         65        328     456943   main.o
         64         26        236          0       1536        788   startup_stm32f103xb.o
        128         24          0         12          0       5145   stm32f1xx_hal.o
       1484         54          0          0          0       8183   stm32f1xx_hal_adc.o
@@ -1846,7 +1847,7 @@ Image component sizes
          2          0         24          4          0       1055   system_stm32f1xx.o
 
     ----------------------------------------------------------------------
-      9236        596        328         88       1864     547556   Object Totals
+      9256        594        328         88       1864     547643   Object Totals
          0          0         32          0          0          0   (incl. Generated)
         22          0          0          3          0          0   (incl. Padding)
 
@@ -1896,15 +1897,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-      9592        612        328         88       1960     543172   Grand Totals
-      9592        612        328         88       1960     543172   ELF Image Totals
-      9592        612        328         88          0          0   ROM Totals
+      9612        610        328         88       1960     543259   Grand Totals
+      9612        610        328         88       1960     543259   ELF Image Totals
+      9612        610        328         88          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)                 9920 (   9.69kB)
+    Total RO  Size (Code + RO Data)                 9940 (   9.71kB)
     Total RW  Size (RW Data + ZI Data)              2048 (   2.00kB)
-    Total ROM Size (Code + RO Data + RW Data)      10008 (   9.77kB)
+    Total ROM Size (Code + RO Data + RW Data)      10028 (   9.79kB)
 
 ==============================================================================
 

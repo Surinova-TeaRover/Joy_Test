@@ -45,7 +45,7 @@ uint16_t timer,one_timer;
 //uint8_t prev_data[8],current_data[8],data[8];
 int i,prev_val,flag;
 extern uint8_t Tx[8],Rx[2],Prev_Rx,Uart_Connection;
-/* USER CODE END PV */
+/* USER CODE END PV */ 
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN PFP */
