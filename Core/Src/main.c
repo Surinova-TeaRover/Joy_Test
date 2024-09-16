@@ -57,7 +57,7 @@ uint8_t Lever_Fwd,Lever_Rev,Lever_Value,Lever_Temp,Lever_Right,Lever_Left;
 uint8_t Steering_Mode,All_Wheel,Crab,Zero_Turn,Width_In,Width_Out,Steering_Mode_Temp;
 uint32_t Steering_Angle,Steering_Val,Steering_Angle_Temp,Steering_Val_Avg,Steering_Val_Temp,Adc;
 uint8_t Uart_State_Pin=0,n1;
-uint8_t count,Tx[8],ref,Rx;
+uint8_t count,Tx[8],ref,Rx[2],Uart_Connection,Prev_Uart_Connection,Prev_Rx;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -77,7 +77,17 @@ static void MX_NVIC_Init(void);
 void Uart_State()
 {
 	 Uart_State_Pin=HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_13);
-	if(Uart_State_Pin==0){
+	
+//	if(Uart_State_Pin==0){
+//		HAL_GPIO_WritePin(GPIOB,GPIO_PIN_5,GPIO_PIN_SET);
+//		HAL_GPIO_WritePin(GPIOB,GPIO_PIN_4,GPIO_PIN_RESET);
+//	}
+//	else{
+//		HAL_GPIO_WritePin(GPIOB,GPIO_PIN_4,GPIO_PIN_SET);
+//		HAL_GPIO_WritePin(GPIOB,GPIO_PIN_5,GPIO_PIN_RESET);
+//	}
+
+	if(Uart_Connection==0){
 		HAL_GPIO_WritePin(GPIOB,GPIO_PIN_5,GPIO_PIN_SET);
 		HAL_GPIO_WritePin(GPIOB,GPIO_PIN_4,GPIO_PIN_RESET);
 	}
@@ -88,15 +98,16 @@ void Uart_State()
 }
 void Main_Battery()
 {
-	HAL_UART_Receive_IT(&huart1,&Rx,sizeof(Rx));
-	if(Rx==1) {
+	HAL_UART_Receive_IT(&huart1,Rx,sizeof(Rx));
+	if(Rx[0]==1) {
 		HAL_GPIO_WritePin(GPIOB,GPIO_PIN_6,GPIO_PIN_SET);
 		HAL_GPIO_WritePin(GPIOB,GPIO_PIN_7,GPIO_PIN_RESET);
 	  }                                                        // Battery level checking condition
-	  else if(Rx==0){
+	  else if(Rx[0]==0){
 		HAL_GPIO_WritePin(GPIOB,GPIO_PIN_7,GPIO_PIN_SET);
 		HAL_GPIO_WritePin(GPIOB,GPIO_PIN_6,GPIO_PIN_RESET);
 	  }
+	
 	
 }
 void Tx_Data()
@@ -243,7 +254,7 @@ int main(void)
   /* Initialize interrupts */
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
-//	HAL_TIM_Base_Start_IT(&htim2);
+	HAL_TIM_Base_Start_IT(&htim2);
 
   /* USER CODE END 2 */
 

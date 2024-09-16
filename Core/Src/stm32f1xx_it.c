@@ -44,7 +44,7 @@
 uint16_t timer,one_timer;
 //uint8_t prev_data[8],current_data[8],data[8];
 int i,prev_val,flag;
-extern uint8_t Tx[8];
+extern uint8_t Tx[8],Rx[2],Prev_Rx,Uart_Connection;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -274,6 +274,7 @@ void TIM2_IRQHandler(void)
 //		data[0]=0xFF;
 //	data[7]=0xAA;
 	if(timer%10==0){
+		{if(Rx[1]==Prev_Rx){Uart_Connection=0;}else Uart_Connection=1;Prev_Rx=  Rx[1];}
 //		for(i=1;i<7;i++){
 //			data[i]=i+one_timer;
 //		}
