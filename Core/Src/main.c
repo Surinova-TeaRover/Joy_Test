@@ -57,7 +57,7 @@ uint8_t Lever_Fwd,Lever_Rev,Lever_Value,Lever_Temp,Lever_Right,Lever_Left;
 uint8_t Steering_Mode,All_Wheel,Crab,Zero_Turn,Width_In,Width_Out,Steering_Mode_Temp;
 uint32_t Steering_Angle,Steering_Val,Steering_Angle_Temp,Steering_Val_Avg,Steering_Val_Temp,Adc;
 uint8_t Uart_State_Pin=0,n1;
-uint8_t count,Tx[8],ref,Rx[2],Uart_Connection,Prev_Uart_Connection,Prev_Rx,Uart_Check;
+uint8_t count,Tx[8],ref,Rx[2],Uart_Connection,Prev_Uart_Connection,Prev_Rx,Uart_Check,Data[1];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -87,11 +87,11 @@ void Uart_State()
 //		HAL_GPIO_WritePin(GPIOB,GPIO_PIN_5,GPIO_PIN_RESET);
 //	}
 	Uart_Check=(Uart_State_Pin==1 || Uart_Connection==1)?1:0;
-	if(Uart_Check==0 ){
+	if(Uart_Check==1 ){
 		HAL_GPIO_WritePin(GPIOB,GPIO_PIN_5,GPIO_PIN_SET);
 		HAL_GPIO_WritePin(GPIOB,GPIO_PIN_4,GPIO_PIN_RESET);
 	}
-	else if (Uart_Check==1) {
+	else if (Uart_Check==0) {
 		HAL_GPIO_WritePin(GPIOB,GPIO_PIN_4,GPIO_PIN_SET);
 		HAL_GPIO_WritePin(GPIOB,GPIO_PIN_5,GPIO_PIN_RESET);
 	}
@@ -99,11 +99,11 @@ void Uart_State()
 void Main_Battery()
 {
 	HAL_UART_Receive_IT(&huart1,Rx,sizeof(Rx));
-	if(Rx[0]==1) {
+	if(Rx[0]!=1) {
 		HAL_GPIO_WritePin(GPIOB,GPIO_PIN_6,GPIO_PIN_SET);
 		HAL_GPIO_WritePin(GPIOB,GPIO_PIN_7,GPIO_PIN_RESET);
 	  }                                                        // Battery level checking condition
-	  else if(Rx[0]==0){
+	  else if(Rx[0]==1){
 		HAL_GPIO_WritePin(GPIOB,GPIO_PIN_7,GPIO_PIN_SET);
 		HAL_GPIO_WritePin(GPIOB,GPIO_PIN_6,GPIO_PIN_RESET);
 	  }
@@ -127,7 +127,7 @@ void Modes()
 	{
 		Semi=HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_6);
 		Side_Sensing=HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_0);
-		Mode=((Semi==0)? 3: (Side_Sensing==0)? 1: 2);
+		Mode=((Semi==0)? 1: (Side_Sensing==0)? 3: 2);
 			
 		if(Mode_Temp!=Mode){
 			 Tx_Data();
@@ -168,7 +168,7 @@ void Speed()
 		Lever_Left=HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_3);
 		Lever_Right=HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_12);
 		Lever_Rev=HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_15);
-		Lever_Value=((Lever_Fwd==0)? 4 : (Lever_Rev==0)? 3 : (Lever_Right==0)? 2: (Lever_Left==0)? 1: 0);
+		Lever_Value=((Lever_Fwd==0)? 1 : (Lever_Rev==0)? 2 : (Lever_Right==0)? 4: (Lever_Left==0)? 3: 0);
 		if(Lever_Temp != Lever_Value){
 			Tx_Data();
 			Lever_Temp=Lever_Value;
