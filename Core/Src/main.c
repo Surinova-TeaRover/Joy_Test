@@ -57,7 +57,7 @@ uint8_t Lever_Fwd,Lever_Rev,Lever_Value,Lever_Temp,Lever_Right,Lever_Left;
 uint8_t Steering_Mode,All_Wheel,Crab,Zero_Turn,Width_In,Width_Out,Steering_Mode_Temp;
 uint32_t Steering_Angle,Steering_Val,Steering_Angle_Temp,Steering_Val_Avg,Steering_Val_Temp,Adc;
 uint8_t Uart_State_Pin=0,n1;
-uint8_t count,Tx[8],ref,Rx[2],Uart_Connection,Prev_Uart_Connection,Prev_Rx,Uart_Check,Data[1];
+uint8_t count,Tx[8],ref,Rx[2],Uart_Connection,Prev_Uart_Connection,Prev_Rx,Uart_Check,Data[8];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/

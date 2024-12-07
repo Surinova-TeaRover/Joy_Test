@@ -44,7 +44,7 @@
 uint16_t timer,one_timer;
 //uint8_t prev_data[8],current_data[8],data[8];
 int i,prev_val,flag;
-extern uint8_t Tx[8],Rx[2],Prev_Rx,Uart_Connection,Data[1];
+extern uint8_t Tx[8],Rx[2],Prev_Rx,Uart_Connection,Data[8];
 /* USER CODE END PV */ 
 
 /* Private function prototypes -----------------------------------------------*/
@@ -279,7 +279,7 @@ void TIM2_IRQHandler(void)
 //			data[i]=i+one_timer;
 //		}
 //	HAL_UART_Transmit_IT(&huart1 ,Tx , sizeof(Tx) );	
-	one_timer++;Data[0]=one_timer;
+	one_timer++;for(int i=0;i<8;i++){Data[i]=one_timer;}
 	HAL_UART_Transmit_IT(&huart1,Data, sizeof(Data));
 		
 	}
