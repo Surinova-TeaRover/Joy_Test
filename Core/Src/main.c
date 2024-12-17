@@ -203,7 +203,8 @@ void Speed()
 	 Steering_Val_Avg = Steering_Val / 100000;
 	 if ( ((Steering_Val_Temp+25)< Steering_Val_Avg)|| ((Steering_Val_Temp-25)>Steering_Val_Avg ))
 	 {
-	   Steering_Angle = (Steering_Val_Avg * 180)/4037;
+	   Steering_Angle = (Steering_Val_Avg * 181)/4036;
+		 Steering_Angle=(Steering_Angle<=0)?0:(Steering_Angle>180)?180:Steering_Angle;
 		 if( Steering_Angle != Steering_Angle_Temp )
 		 {
 			Tx_Data();
@@ -221,8 +222,6 @@ void Speed()
   * @retval int
   */
 int main(void)
-
-
 {
   /* USER CODE BEGIN 1 */
 
