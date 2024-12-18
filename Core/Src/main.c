@@ -253,6 +253,8 @@ int main(void)
   /* Initialize interrupts */
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
+	Data[0]=0xBB;
+  Data[7]=0xEE;
 	HAL_TIM_Base_Start_IT(&htim2);
 
   /* USER CODE END 2 */

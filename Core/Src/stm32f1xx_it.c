@@ -54,7 +54,6 @@ extern uint8_t Tx[8],Rx[2],Prev_Rx,Uart_Connection,Data[8];
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
@@ -279,7 +278,7 @@ void TIM2_IRQHandler(void)
 //			data[i]=i+one_timer;
 //		}
 //	HAL_UART_Transmit_IT(&huart1 ,Tx , sizeof(Tx) );	
-	one_timer++;for(int i=0;i<8;i++){Data[i]=one_timer;}
+	one_timer++;for(int i=1;i<7;i++){Data[i]=one_timer;}
 	HAL_UART_Transmit_IT(&huart1,Data, sizeof(Data));
 		
 	}
