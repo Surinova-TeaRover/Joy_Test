@@ -18,7 +18,8 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-
+#include "stdbool.h"
+#include "time.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -31,7 +32,8 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
+#define SET 1
+#define NULL 0
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -57,7 +59,9 @@ uint8_t Lever_Fwd,Lever_Rev,Lever_Value,Lever_Temp,Lever_Right,Lever_Left;
 uint8_t Steering_Mode,All_Wheel,Crab,Zero_Turn,Width_In,Width_Out,Steering_Mode_Temp;
 uint32_t Steering_Angle,Steering_Val,Steering_Angle_Temp,Steering_Val_Avg,Steering_Val_Temp,Adc;
 uint8_t Uart_State_Pin=0,n1;
-uint8_t count,Tx[8],ref,Rx[2],Uart_Connection,Prev_Uart_Connection,Prev_Rx,Uart_Check,Data[8];
+uint8_t count,Tx[9],ref,Rx[2],Uart_Connection,Prev_Uart_Connection,Prev_Rx,Uart_Check,Data[8];
+bool TX_FLAG=NULL;
+uint64_t Tx_Time=0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -99,7 +103,7 @@ void Uart_State()
 void Main_Battery()
 {
 	HAL_UART_Receive_IT(&huart1,Rx,sizeof(Rx));
-	if(Rx[0]!=1) {
+	if(Rx[0]==0) {
 		HAL_GPIO_WritePin(GPIOB,GPIO_PIN_6,GPIO_PIN_SET);
 		HAL_GPIO_WritePin(GPIOB,GPIO_PIN_7,GPIO_PIN_RESET);
 	  }                                                        // Battery level checking condition
@@ -107,8 +111,6 @@ void Main_Battery()
 		HAL_GPIO_WritePin(GPIOB,GPIO_PIN_7,GPIO_PIN_SET);
 		HAL_GPIO_WritePin(GPIOB,GPIO_PIN_6,GPIO_PIN_RESET);
 	  }
-	
-	
 }
 void Tx_Data()
 	{
@@ -119,8 +121,8 @@ void Tx_Data()
 	Tx[4]=Steering_Angle;
 	Tx[5]=Lever_Value;
 	Tx[6]=Shearing_Value;
-	Tx[7]=0xFF;
-	count++;
+	Tx[8]=0xFF;
+	Tx[7]=count;
 	HAL_UART_Transmit_IT(&huart1 ,Tx  , sizeof(Tx) );		
 }
 void Modes()
@@ -130,7 +132,8 @@ void Modes()
 		Mode=((Semi==0)? 1: (Side_Sensing==0)? 3: 2);
 			
 		if(Mode_Temp!=Mode){
-			 Tx_Data();
+			TX_FLAG=SET;
+//			 Tx_Data();
 			 Mode_Temp=Mode;
 		//	a++;
 		 }
@@ -146,7 +149,8 @@ void Speed()
 	  Speed_Level=((speed1==0)? 1 : (speed2==0)? 2 : (speed3==0)? 3:(speed4==0)? 4:(speed5==0)? 5: 0);
 	
 	  if(Speed_Temp != Speed_Level){
-		  Tx_Data();	
+//		  Tx_Data();
+	TX_FLAG=SET;			
 		  Speed_Temp=Speed_Level;
 		//	a++;
 	  }
@@ -157,7 +161,8 @@ void Speed()
 			  Side_Trimmer=HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_10);
 			  Shearing_Value=((Shearing==0)? 1 :(Side_Trimmer==0)? 3 :2);
 			if(Shearing_Value!=Shearing_Value_Temp){
-				Tx_Data();
+//				Tx_Data();
+					TX_FLAG=SET;
 				Shearing_Value_Temp=Shearing_Value;
 			//	a++;
 				} 
@@ -170,7 +175,8 @@ void Speed()
 		Lever_Rev=HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_15);
 		Lever_Value=((Lever_Fwd==0)? 1 : (Lever_Rev==0)? 2 : (Lever_Right==0)? 4: (Lever_Left==0)? 3: 0);
 		if(Lever_Temp != Lever_Value){
-			Tx_Data();
+//			Tx_Data();
+				TX_FLAG=SET;
 			Lever_Temp=Lever_Value;
 		//	a++;
 		}
@@ -185,7 +191,8 @@ void Speed()
 		Steering_Mode=((All_Wheel==0)? 1 : (Crab==0)? 2 : (Zero_Turn==0)? 3 : (Width_In==0)? 4 : (Width_Out==0)? 5 :0);
 		
 		if(Steering_Mode_Temp != Steering_Mode){
-		  Tx_Data();
+//		  Tx_Data();
+				TX_FLAG=SET;
 		  Steering_Mode_Temp = Steering_Mode;
 	//		a++;
 		}
@@ -207,7 +214,8 @@ void Speed()
 		 Steering_Angle=(Steering_Angle<=0)?0:(Steering_Angle>180)?180:Steering_Angle;
 		 if( Steering_Angle != Steering_Angle_Temp )
 		 {
-			Tx_Data();
+//			Tx_Data();
+			 	TX_FLAG=SET;
 			Steering_Angle_Temp = Steering_Angle;
 		//	 a++;
 		 }
@@ -247,7 +255,7 @@ int main(void)
   MX_GPIO_Init();
   MX_DMA_Init();
   MX_ADC1_Init();
-  MX_TIM2_Init();
+//  MX_TIM2_Init();
   MX_USART1_UART_Init();
 
   /* Initialize interrupts */
@@ -255,7 +263,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
 	Data[0]=0xBB;
   Data[7]=0xEE;
-	HAL_TIM_Base_Start_IT(&htim2);
+//	HAL_TIM_Base_Start_IT(&htim2);
 
   /* USER CODE END 2 */
 
@@ -272,6 +280,11 @@ int main(void)
 		Lever();
 		Steering_Modes();
 		Steering();
+		if((HAL_GetTick()-Tx_Time)>750){          //(TX_FLAG==SET)
+			count++;
+			Tx_Data();
+			Tx_Time=HAL_GetTick();
+		}
 
 //		HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_4);
 //		HAL_Delay(1000);

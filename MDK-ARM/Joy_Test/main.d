@@ -30,3 +30,5 @@ joy_test\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
 joy_test\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h
 joy_test\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h
 joy_test\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
+joy_test\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
+joy_test\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\time.h
