@@ -287,10 +287,6 @@ int main(void)
 			Tx_Data();
 			Tx_Time=HAL_GetTick();
 		}
-		if((HAL_GetTick()-TX_2Time)>250){
-		inc++;
-			TX_2Time=HAL_GetTick();
-		}
 
 //		HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_4);
 //		HAL_Delay(1000);
