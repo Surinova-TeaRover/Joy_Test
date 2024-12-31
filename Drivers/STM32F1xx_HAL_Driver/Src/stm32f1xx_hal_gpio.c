@@ -302,7 +302,7 @@ void HAL_GPIO_Init(GPIO_TypeDef  *GPIOx, GPIO_InitTypeDef *GPIO_Init)
         }
         else
         {
--          CLEAR_BIT(EXTI->RTSR, iocurrent);
+          CLEAR_BIT(EXTI->RTSR, iocurrent);
         }
 
         /* Enable or disable the falling trigger */

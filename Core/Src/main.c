@@ -18,11 +18,11 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "stdbool.h"
-#include "time.h"
+
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "stdbool.h"
+#include "time.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -47,7 +47,6 @@ ADC_HandleTypeDef hadc1;
 TIM_HandleTypeDef htim2;
 
 UART_HandleTypeDef huart1;
-DMA_HandleTypeDef hdma_usart1_rx;
 DMA_HandleTypeDef hdma_usart1_tx;
 
 /* USER CODE BEGIN PV */
@@ -59,9 +58,9 @@ uint8_t Lever_Fwd,Lever_Rev,Lever_Value,Lever_Temp,Lever_Right,Lever_Left;
 uint8_t Steering_Mode,All_Wheel,Crab,Zero_Turn,Width_In,Width_Out,Steering_Mode_Temp;
 uint32_t Steering_Angle,Steering_Val,Steering_Angle_Temp,Steering_Val_Avg,Steering_Val_Temp,Adc;
 uint8_t Uart_State_Pin=0,n1;
-uint8_t count,Tx[9],ref,Rx[2],Uart_Connection,Prev_Uart_Connection,Prev_Rx,Uart_Check,Data[8];
+uint8_t count,Tx[9],ref,Rx[2],Uart_Connection,Prev_Uart_Connection,Prev_Rx,Uart_Check,Data[8],inc=0,difference=0;
 bool TX_FLAG=NULL;
-uint64_t Tx_Time=0;
+uint32_t Tx_Time=0,calc_time=0,TX_2Time=0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -256,11 +255,12 @@ int main(void)
   MX_DMA_Init();
   MX_ADC1_Init();
 //  MX_TIM2_Init();
-  MX_USART1_UART_Init();
+//  MX_USART1_UART_Init();
 
   /* Initialize interrupts */
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
+	  MX_USART1_UART_Init();
 	Data[0]=0xBB;
   Data[7]=0xEE;
 //	HAL_TIM_Base_Start_IT(&htim2);
@@ -280,10 +280,16 @@ int main(void)
 		Lever();
 		Steering_Modes();
 		Steering();
-		if((HAL_GetTick()-Tx_Time)>750){          //(TX_FLAG==SET)
+	calc_time=HAL_GetTick()-Tx_Time;
+		if((HAL_GetTick()-Tx_Time)>100){ 
+//	calc_time=HAL_GetTick()-Tx_Time;			//(TX_FLAG==SET)
 			count++;
 			Tx_Data();
 			Tx_Time=HAL_GetTick();
+		}
+		if((HAL_GetTick()-TX_2Time)>250){
+		inc++;
+			TX_2Time=HAL_GetTick();
 		}
 
 //		HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_4);
@@ -351,9 +357,6 @@ static void MX_NVIC_Init(void)
   /* TIM2_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(TIM2_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(TIM2_IRQn);
-  /* USART1_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(USART1_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(USART1_IRQn);
   /* RCC_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(RCC_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(RCC_IRQn);
@@ -500,9 +503,6 @@ static void MX_DMA_Init(void)
   /* DMA1_Channel4_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(DMA1_Channel4_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(DMA1_Channel4_IRQn);
-  /* DMA1_Channel5_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(DMA1_Channel5_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(DMA1_Channel5_IRQn);
 
 }
 
