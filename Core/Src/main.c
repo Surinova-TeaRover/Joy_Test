@@ -48,6 +48,7 @@ TIM_HandleTypeDef htim2;
 
 UART_HandleTypeDef huart1;
 DMA_HandleTypeDef hdma_usart1_tx;
+DMA_HandleTypeDef hdma_usart1_rx;
 
 /* USER CODE BEGIN PV */
 uint8_t num=0;
@@ -58,7 +59,7 @@ uint8_t Lever_Fwd,Lever_Rev,Lever_Value,Lever_Temp,Lever_Right,Lever_Left;
 uint8_t Steering_Mode,All_Wheel,Crab,Zero_Turn,Width_In,Width_Out,Steering_Mode_Temp;
 uint32_t Steering_Angle,Steering_Val,Steering_Angle_Temp,Steering_Val_Avg,Steering_Val_Temp,Adc;
 uint8_t Uart_State_Pin=0,n1;
-uint8_t count,Tx[9],ref,Rx[2],Uart_Connection,Prev_Uart_Connection,Prev_Rx,Uart_Check,Data[8],inc=0,difference=0;
+uint8_t count,Tx[9],ref,Rx,Uart_Connection,Prev_Uart_Connection,Prev_Rx,Uart_Check,Data[8],inc=0,difference=0;
 bool TX_FLAG=NULL;
 uint32_t Tx_Time=0,calc_time=0,TX_2Time=0;
 /* USER CODE END PV */
@@ -101,15 +102,20 @@ void Uart_State()
 }
 void Main_Battery()
 {
-	HAL_UART_Receive_IT(&huart1,Rx,sizeof(Rx));
-	if(Rx[0]==0) {
-		HAL_GPIO_WritePin(GPIOB,GPIO_PIN_6,GPIO_PIN_SET);
-		HAL_GPIO_WritePin(GPIOB,GPIO_PIN_7,GPIO_PIN_RESET);
+	HAL_UART_Receive_DMA(&huart1,&Rx,sizeof(Rx));
+	if(Rx==0 && Uart_Check==1) {
+		HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_6);
+//		HAL_GPIO_WritePin(GPIOB,GPIO_PIN_6,GPIO_PIN_SET);
+//		HAL_GPIO_WritePin(GPIOB,GPIO_PIN_7,GPIO_PIN_RESET);
 	  }                                                        // Battery level checking condition
-	  else if(Rx[0]==1){
+	  else if(Rx==1){
 		HAL_GPIO_WritePin(GPIOB,GPIO_PIN_7,GPIO_PIN_SET);
 		HAL_GPIO_WritePin(GPIOB,GPIO_PIN_6,GPIO_PIN_RESET);
 	  }
+		else{
+				HAL_GPIO_WritePin(GPIOB,GPIO_PIN_6,GPIO_PIN_SET);
+		HAL_GPIO_WritePin(GPIOB,GPIO_PIN_7,GPIO_PIN_RESET);
+		}
 }
 void Tx_Data()
 	{
@@ -254,7 +260,7 @@ int main(void)
   MX_GPIO_Init();
   MX_DMA_Init();
   MX_ADC1_Init();
-//  MX_TIM2_Init();
+  MX_TIM2_Init();
 //  MX_USART1_UART_Init();
 
   /* Initialize interrupts */
@@ -499,6 +505,9 @@ static void MX_DMA_Init(void)
   /* DMA1_Channel4_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(DMA1_Channel4_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(DMA1_Channel4_IRQn);
+  /* DMA1_Channel5_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA1_Channel5_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(DMA1_Channel5_IRQn);
 
 }
 
