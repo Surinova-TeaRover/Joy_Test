@@ -134,7 +134,7 @@ void Modes()
 	{
 		Semi=HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_6);
 		Side_Sensing=HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_0);
-		Mode=((Semi==0)? 1: (Side_Sensing==0)? 3: 2);
+		Mode=((Semi==0)? 3: (Side_Sensing==0)? 1: 2);
 			
 		if(Mode_Temp!=Mode){
 			TX_FLAG=SET;
@@ -178,7 +178,7 @@ void Speed()
 		Lever_Left=HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_3);
 		Lever_Right=HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_12);
 		Lever_Rev=HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_15);
-		Lever_Value=((Lever_Fwd==0)? 1 : (Lever_Rev==0)? 2 : (Lever_Right==0)? 4: (Lever_Left==0)? 3: 0);
+		Lever_Value=((Lever_Fwd==0)? 4 : (Lever_Rev==0)? 3 : (Lever_Right==0)? 2: (Lever_Left==0)? 1: 0);
 		if(Lever_Temp != Lever_Value){
 //			Tx_Data();
 				TX_FLAG=SET;
